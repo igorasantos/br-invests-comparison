@@ -61,6 +61,7 @@ const mapper = obj => {
     tipoRentab: postfixedYield(obj) ? 'Pos' : 'Pre',
     liquidez: liquidezVenc(obj) ? 'vcto' : '?',
     invMin: aplicMinStandard,
+    vencimento: obj.prazoFormatado,
     payJuros: 'vcto',
     amort: 'vcto',
     ir: obj.impostoRenda ? 1 : 0,
