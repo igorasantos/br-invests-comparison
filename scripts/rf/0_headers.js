@@ -8,6 +8,7 @@ const mapperArrReturn = [{
   tipoRentab: '',
   liquidez: '',
   invMin: '',
+  vencimento: '',
   payJuros: '',
   amort: '',
   ir: '',
