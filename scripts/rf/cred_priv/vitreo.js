@@ -73,7 +73,7 @@ const mapper = obj => {
     amort: obj.amortizacao,
     ir: obj.impostoRenda === 'Isento' ? 0 : 1,
     preRentAA: postfixedYield(obj) ? '-' : yieldPercent,
-    posRentIndex: ipcaCond(obj) ? 'IPCA' : cdiCond(obj) ? 'CDI' : selicCond(obj) ? 'SELIC' : '-',
+    posRentIndex: ipcaCond(obj) ? 'IPCA' : cdiCond(obj) ? 'DI' : selicCond(obj) ? 'SELIC' : '-',
     posPercentIndex: obj.rentabilidade.includes('% do ') ? yieldPercent : '-',
     posIndexPlus: obj.rentabilidade.includes('+') ? yieldPercent : '-',
   };
