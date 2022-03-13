@@ -91,7 +91,7 @@ const mapper = obj => {
     emissor: obj.nickName,
     tipoPapel: obj.product,
     tipoRentab: postfixedYield(obj) ? 'Pos' : 'Pre',
-    liquidez: liquidezVenc(obj) === obj.maturityDate ? 'vcto' : 'amortizado',
+    liquidez: liquidezVenc(obj) ? 'vcto' : 'amortizado',
     invMin: aplicMinStandard,
     vencimento: parserPrazo(obj.maturityDate),
     payJuros: obj.descriptionInterestrates,
