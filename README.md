@@ -44,8 +44,7 @@ Due to personal preferences in analysis mode, I won't cover this in the script c
 - Vitreo
 - XP
 - Nu
-- BTG (todo)
-- Inter (todo)
+- BTG (todo - em dia de semana)
 - TD: not supported (do it manually)
 
 `wip`
