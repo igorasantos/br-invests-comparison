@@ -43,11 +43,9 @@ Due to personal preferences in analysis mode, I won't cover this in the script c
 # Supported broker dealers
 - Vitreo
 - XP
-- Nu (input data collected)
-- BB: not supported (do it manually)
-- Itaú: not supported (do it manually)
+- Nu (input data collected - script to do)
+- BTG (to do - co)
 - TD: not supported (do it manually)
-- Inter
 
 `wip`
 
