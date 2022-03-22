@@ -44,10 +44,8 @@ Due to personal preferences in analysis mode, I won't cover this in the script c
 - Vitreo
 - XP
 - Nu
-- BTG (todo - em dia de semana)
+- BTG (todo)
 - TD: not supported (do it manually)
-
-`wip`
 
 # Disclaimer
 This repo and it's code isn't any kind of investment advice or any preference by some broker dealer.
