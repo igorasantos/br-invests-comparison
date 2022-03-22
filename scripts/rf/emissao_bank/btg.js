@@ -79,8 +79,8 @@ const mapper = obj => {
     ir: obj.incomeTaxFree ? 1 : 0,
     preRentAA: postfixedYield(obj) ? '-' : yieldPercent,
     posRentIndex: ipcaCond(obj) ? 'IPCA' : cdiCond(obj) ? 'DI' : selicCond(obj) ? 'SELIC' : '-',
-    posPercentIndex: obj.percentIndexValue.includes('% do ') ? yieldPercent : '-',
-    posIndexPlus: obj.percentIndexValue.includes('+') ? yieldPercent : '-',
+    posPercentIndex: obj.indexCaptureName.toLowerCase().includes('e') ? yieldPercent : '-',
+    posIndexPlus: obj.indexCaptureName.includes('+') ? yieldPercent : '-',
   };
 };
 const outputArr = inputArrOrdered.map(mapper);
