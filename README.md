@@ -47,6 +47,41 @@ Due to personal preferences in analysis mode, I won't cover this in the script c
 - BTG (todo)
 - TD: not supported (do it manually)
 
+# Files - inputs directory
+```sh
+.
+└── inputs
+    └── rf
+        ├── cred_priv
+        │   ├── btg
+        │   │   ├── cra_cri.json
+        │   │   └── deb.json
+        │   ├── nu
+        │   │   ├── cri_cra.json
+        │   │   └── deb.json
+        │   ├── vitreo
+        │   │   └── 01.json
+        │   └── xp
+        │       └── 01.json
+        └── emissao_bank
+            ├── btg
+            │   └── cdb_lca_lci_lf_lc.json
+            ├── emissores_vitreo.json
+            ├── nu
+            │   ├── cdb_lc.json
+            │   └── lci_lca.json
+            ├── vitreo
+            │   ├── 01.json
+            │   ├── 02.json
+            │   ├── 03.json
+            │   ├── 04.json
+            │   ├── 05.json
+            │   ├── 06.json
+            │   └── 07.json
+            └── xp
+                └── 01.json
+```
+
 # Disclaimer
 This repo and it's code isn't any kind of investment advice or any preference by some broker dealer.
 
