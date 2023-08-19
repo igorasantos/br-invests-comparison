@@ -1,9 +1,9 @@
-const vitreo = require('./vitreo');
+// const vitreo = require('./vitreo');
 const xp = require('./xp');
 const nu = require('./nu');
 const btg = require('./btg');
 
-vitreo;
+// vitreo;
 xp;
 nu;
 btg;
