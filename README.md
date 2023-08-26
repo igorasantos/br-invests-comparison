@@ -42,9 +42,9 @@ Due to personal preferences in analysis mode, I won't cover this in the script c
   - and so on
 
 # Mapped broker dealers
-- XP
-- Nu
-- BTG
+- [XP](https://www.xpi.com.br/)
+- [Nu](https://www.nuinvest.com.br/)
+- [BTG Pactual](https://www.btgpactualdigital.com/)
 
 # Files - inputs directory
 ```sh
@@ -71,6 +71,8 @@ Due to personal preferences in analysis mode, I won't cover this in the script c
 ```
 
 # Disclaimer
+- The data modeling from broker dealers may change. So this code may not output correct data.
+
 - Broker dealers administration fees are not covered here.
 
 - Broker dealers transaction fees are not covered here.
