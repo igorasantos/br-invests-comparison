@@ -31,7 +31,6 @@ const inputArrFilteredAndOrdered = inputArrFiltered.sort(compareFn);
 
 const mapper = obj => {
   const regexNumerico = /\d+(?:\.\d+)*(?:,\d+)?/g;
-  // const aplicMinLoc = obj.aplicacaoMinima.match(regexNumerico)[0];
   const rentabValueLoc = obj.rentability.match(regexNumerico)[0];
 
   const expDot = /\./g;
@@ -48,7 +47,6 @@ const mapper = obj => {
   const selicCond = ob => ob.index.toLowerCase().includes('selic');
   const prefixedCond = ob => ob.index.toLowerCase().includes('prefixado');
   const postfixedYield = o => ipcaCond(o) || cdiCond(o) || selicCond(o) || !prefixedCond(o);
-  // const liquidezVenc = o => o.liquidityDescription.toLowerCase().includes('no vcto.');
   const incomeTax = product => {
     let ir;
     switch (product) {

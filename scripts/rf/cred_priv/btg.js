@@ -17,11 +17,9 @@ const inputArrAllPages = inputDirFiles.map( fileName => {
 }).flat(1);
 
 const filterNotInvestidorQualificado = obj => obj.investmentType.toLowerCase().includes('nq') && !obj.investmentType.toLowerCase().includes('ql');
-// const filterNotInvestidorProfissional = obj => obj.investidorProfissional === false;
 
 const inputArrFiltered = inputArrAllPages
   .filter(filterNotInvestidorQualificado);
-  // .filter(filterNotInvestidorProfissional);
 
 const compareFn = (first, second) => {
   if (first.id < second.id) return -1;
@@ -31,14 +29,8 @@ const compareFn = (first, second) => {
 const inputArrOrdered = inputArrFiltered.sort(compareFn);
 
 const mapper = obj => {
-  // const regexNumerico = /\d+(?:\.\d+)*(?:,\d+)?/g;
-  // const aplicMinLoc = obj.aplicacaoMinima.match(regexNumerico)[0];
-  // const rentabValueLoc = obj.rentabilidade.match(regexNumerico)[0];
 
-  // const expDot = /\./g;
-  // const expComma = /\,/g;
   const aplicMinStandard = obj.minimumApplicationValue.toLocaleString('pt-BR', { style: 'decimal' });
-  // const rentabStandard = Number(rentabValueLoc.replace(expDot, '').replace(expComma, '.'));
   const rentabStandard = obj.percentIndexValue;
 
   const ipcaCond = ob => ob.indexCaptureName.toLowerCase().includes('ipca');
@@ -46,7 +38,6 @@ const mapper = obj => {
   const selicCond = ob => ob.indexCaptureName.toLowerCase().includes('selic');
   const prefixedCond = ob => ob.indexCaptureName ? ob.indexCaptureName.toLowerCase().includes('pre') : false;
   const postfixedYield = o => ipcaCond(o) || cdiCond(o) || selicCond(o) || !prefixedCond(o);
-  // const liquidezVenc = o => o.typeLiquidityName.toLowerCase().includes('no vencimento');
   const liquidezVenc = 'vcto';
 
   const yieldPercent = parseFloat(
@@ -80,15 +71,6 @@ const mapper = obj => {
     const deb = !cra && !cri;
     return cra ? 'CRA' : cri ? 'CRI' : deb ? 'DEB' : 'verif';
   };
-
-  // const parserTypeDeadline = str => {
-  //   const mensal = str.toLowerCase().includes('mensal') ? true : false;
-  //   const meses = str.toLowerCase().includes('meses') ? true : false;
-  //   const semestral = str.toLowerCase().includes('semestral') ? true : false;
-  //   const anual = str.toLowerCase().includes('anual') ? true : false;
-  //   const vencimento = str.toLowerCase().includes('vencimento') ? true : false;
-  //   return mensal ? mensal : meses ? meses : semestral ? semestral : anual ? anual : vencimento ? vencimento : 'verif';
-  // };
 
   return {
     distr: 'BTG',

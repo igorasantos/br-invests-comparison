@@ -30,7 +30,6 @@ const inputArrOrdered = inputArrAllPages.sort(compareFn);
 
 const mapper = obj => {
   const regexNumerico = /\d+(?:\.\d+)*(?:,\d+)?/g;
-  // const aplicMinLoc = obj.aplicacaoMinima.match(regexNumerico)[0];
   const rentabValueLoc = obj.rentabilidade.match(regexNumerico)[0];
 
   const expDot = /\./g;
@@ -43,7 +42,6 @@ const mapper = obj => {
   const selicCond = ob => ob.rentabilidade.toLowerCase().includes('selic');
   const prefixedCond = ob => ob.rentabilidade.toLowerCase().includes('prefixado');
   const postfixedYield = o => ipcaCond(o) || cdiCond(o) || selicCond(o) || !prefixedCond(o);
-  // const liquidezVenc = o => o.resgateFormatado.toLowerCase().includes('no vencimento');
 
   const yieldPercent = parseFloat(
     (rentabStandard/100)

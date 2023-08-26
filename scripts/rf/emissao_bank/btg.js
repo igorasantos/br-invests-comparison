@@ -24,23 +24,14 @@ const compareFn = (first, second) => {
 const inputArrOrdered = inputArrAllPages.sort(compareFn);
 
 const mapper = obj => {
-  // const regexNumerico = /\d+(?:\.\d+)*(?:,\d+)?/g;
-  // const aplicMinLoc = obj.aplicacaoMinima.match(regexNumerico)[0];
-  // const rentabValueLoc = obj.rentabilidade.match(regexNumerico)[0];
-
-  // const expDot = /\./g;
-  // const expComma = /\,/g;
   const aplicMinStandard = obj.minAplicationValue.toLocaleString('pt-BR', { style: 'decimal' });
-  // const rentabStandard = Number(rentabValueLoc.replace(expDot, '').replace(expComma, '.'));
-
-
+  
   const ipcaCond = ob => ob.indexCaptureName.toLowerCase().includes('ipca');
   const cdiCond = ob => ob.indexCaptureName.toLowerCase().includes('cdi');
   const selicCond = ob => ob.indexCaptureName.toLowerCase().includes('selic');
   const prefixedCond = ob => ob.indexCaptureName.toLowerCase().includes('pre');
   const postfixedYield = o => ipcaCond(o) || cdiCond(o) || selicCond(o) || !prefixedCond(o);
-  // const liquidezVenc = o => o.typeLiquidityName.toLowerCase().includes('no vencimento');
-
+  
   const rentabStandard = () => {
     if (
       prefixedCond(obj) ||

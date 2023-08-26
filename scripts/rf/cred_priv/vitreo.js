@@ -50,7 +50,6 @@ const mapper = obj => {
   const selicCond = ob => ob.rentabilidade.toLowerCase().includes('selic');
   const prefixedCond = ob => ob.rentabilidade.toLowerCase().includes('prefixado');
   const postfixedYield = o => ipcaCond(o) || cdiCond(o) || selicCond(o) || !prefixedCond(o);
-  // const liquidezVenc = o => o.amortizacao.toLowerCase().includes('no vencimento');
 
   const yieldPercent = parseFloat(
     (rentabStandard/100)
