@@ -38,7 +38,6 @@ const mapper = obj => {
   const selicCond = ob => ob.indexCaptureName.toLowerCase().includes('selic');
   const prefixedCond = ob => ob.indexCaptureName ? ob.indexCaptureName.toLowerCase().includes('pre') : false;
   const postfixedYield = o => ipcaCond(o) || cdiCond(o) || selicCond(o) || !prefixedCond(o);
-  const liquidezVenc = 'vcto';
 
   const yieldPercent = parseFloat(
     (rentabStandard/100)
