@@ -44,7 +44,7 @@ const mapper = obj => {
   const ipcaCond = ob => ob.indexCaptureName.toLowerCase().includes('ipca');
   const cdiCond = ob => ob.indexCaptureName.toLowerCase().includes('cdi');
   const selicCond = ob => ob.indexCaptureName.toLowerCase().includes('selic');
-  const prefixedCond = ob => ob.taxaCaptacaoName ? ob.taxaCaptacaoName.toLowerCase().includes('pre_fixada') : false;
+  const prefixedCond = ob => ob.indexCaptureName ? ob.indexCaptureName.toLowerCase().includes('pre') : false;
   const postfixedYield = o => ipcaCond(o) || cdiCond(o) || selicCond(o) || !prefixedCond(o);
   // const liquidezVenc = o => o.typeLiquidityName.toLowerCase().includes('no vencimento');
   const liquidezVenc = 'vcto';
@@ -78,33 +78,30 @@ const mapper = obj => {
     const cra = str ? str.toLowerCase().includes('cra') : false;
     const cri = str ? str.toLowerCase().includes('cri') : false;
     const deb = !cra && !cri;
-    return cra ? cra : cri ? cri : deb ? deb : 'verif';
+    return cra ? 'CRA' : cri ? 'CRI' : deb ? 'DEB' : 'verif';
   };
 
-  const parserTypeDeadline = str => {
-    const mensal = str.toLowerCase().includes('mensal') ? true : false;
-    const meses = str.toLowerCase().includes('meses') ? true : false;
-    const semestral = str.toLowerCase().includes('semestral') ? true : false;
-    const anual = str.toLowerCase().includes('anual') ? true : false;
-    const vencimento = str.toLowerCase().includes('vencimento') ? true : false;
-    return mensal ? mensal : meses ? meses : semestral ? semestral : anual ? anual : vencimento ? vencimento : 'verif';
-  };
+  // const parserTypeDeadline = str => {
+  //   const mensal = str.toLowerCase().includes('mensal') ? true : false;
+  //   const meses = str.toLowerCase().includes('meses') ? true : false;
+  //   const semestral = str.toLowerCase().includes('semestral') ? true : false;
+  //   const anual = str.toLowerCase().includes('anual') ? true : false;
+  //   const vencimento = str.toLowerCase().includes('vencimento') ? true : false;
+  //   return mensal ? mensal : meses ? meses : semestral ? semestral : anual ? anual : vencimento ? vencimento : 'verif';
+  // };
 
   return {
     distr: 'BTG',
     emissor: obj.issuerName,
     tipoPapel: paperName(obj.creditName),
     tipoRentab: postfixedYield(obj) ? 'Pos' : 'Pre',
-    liquidez: liquidezVenc === 'vcto' ? 'vcto' : '?',
     invMin: aplicMinStandard,
     vencimento: parserPrazo(obj.applicationDate, obj.applicationDeadline),
-    payJuros: parserTypeDeadline(obj.tipoJuros),
-    amort: parserTypeDeadline(obj.tipoAmortizacao),
-    ir: obj.incomeTaxFree ? 1 : 0,
+    ir: obj.incomeTaxFree ? 0 : 1,
     preRentAA: postfixedYield(obj) ? '-' : yieldPercent,
     posRentIndex: ipcaCond(obj) ? 'IPCA' : cdiCond(obj) ? 'DI' : selicCond(obj) ? 'SELIC' : '-',
-    posPercentIndex: obj.indexTaxDescription.includes('% do ') ? yieldPercent : '-',
-    posIndexPlus: obj.indexTaxDescription.includes('+') ? yieldPercent : '-',
+    posPercentIndex: (postfixedYield(obj) && obj.indexTaxDescription.includes('+')) ? '-' : yieldPercent,
+    posIndexPlus: (postfixedYield(obj) && obj.indexTaxDescription.includes('+')) ? yieldPercent : '-',
   };
 };
 const outputArr = inputArrOrdered.map(mapper);

@@ -48,7 +48,7 @@ const mapper = obj => {
   const selicCond = ob => ob.index.toLowerCase().includes('selic');
   const prefixedCond = ob => ob.index.toLowerCase().includes('prefixado');
   const postfixedYield = o => ipcaCond(o) || cdiCond(o) || selicCond(o) || !prefixedCond(o);
-  const liquidezVenc = o => o.liquidityDescription.toLowerCase().includes('no vcto.');
+  // const liquidezVenc = o => o.liquidityDescription.toLowerCase().includes('no vcto.');
   const incomeTax = product => {
     let ir;
     switch (product) {
@@ -85,21 +85,20 @@ const mapper = obj => {
     const maturityDate = new Date(prazo);
     return maturityDate.toLocaleDateString('pt-BR', {timeZone: 'America/Recife'});
   }
+  const irByIncomeTax = incomeTax(obj.securityType);
+  const irByIncomeTaxFree = obj.incomeTaxFree ? 0 : 1;
 
   return {
     distr: 'Nu',
     emissor: obj.issuerName,
     tipoPapel: obj.securityNameType.substring(0,3),
     tipoRentab: postfixedYield(obj) ? 'Pos' : 'Pre',
-    liquidez: liquidezVenc(obj) ? 'vcto' : 'amortizado',
     invMin: aplicMinStandard,
     vencimento: parserPrazo(obj.maturity),
-    payJuros: obj.liquidity === 0 ? 'vcto' : 'outro',
-    amort: 'vcto',
-    ir: incomeTax(obj.securityType) || obj.incomeTaxFree ? 0 : 1,
+    ir: irByIncomeTax || irByIncomeTaxFree,
     preRentAA: postfixedYield(obj) ? '-' : yieldPercent,
     posRentIndex: ipcaCond(obj) ? 'IPCA' : cdiCond(obj) ? 'DI' : selicCond(obj) ? 'SELIC' : '-',
-    posPercentIndex: obj.rentability.includes('% ') ? yieldPercent : '-',
+    posPercentIndex: obj.rentability.includes('+') ? '-' : yieldPercent,
     posIndexPlus: obj.rentability.includes('+') ? yieldPercent : '-',
   };
 };

@@ -43,7 +43,7 @@ const mapper = obj => {
   const selicCond = ob => ob.rentabilidade.toLowerCase().includes('selic');
   const prefixedCond = ob => ob.rentabilidade.toLowerCase().includes('prefixado');
   const postfixedYield = o => ipcaCond(o) || cdiCond(o) || selicCond(o) || !prefixedCond(o);
-  const liquidezVenc = o => o.resgateFormatado.toLowerCase().includes('no vencimento');
+  // const liquidezVenc = o => o.resgateFormatado.toLowerCase().includes('no vencimento');
 
   const yieldPercent = parseFloat(
     (rentabStandard/100)
@@ -92,11 +92,8 @@ const mapper = obj => {
     emissor: inputArrEmissores.find(ob => ob.codigo === obj.codigoEmissor).nome.trim().replace('  ', ' '),
     tipoPapel: obj.titulo,
     tipoRentab: postfixedYield(obj) ? 'Pos' : 'Pre',
-    liquidez: liquidezVenc(obj) ? 'vcto' : '?',
     invMin: aplicMinStandard,
     vencimento: parserPrazo(obj.prazoFormatado),
-    payJuros: 'vcto',
-    amort: 'vcto',
     ir: obj.impostoRenda ? 1 : 0,
     preRentAA: postfixedYield(obj) ? '-' : yieldPercent,
     posRentIndex: ipcaCond(obj) ? 'IPCA' : cdiCond(obj) ? 'DI' : selicCond(obj) ? 'SELIC' : '-',

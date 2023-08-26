@@ -32,17 +32,31 @@ const mapper = obj => {
   // const expComma = /\,/g;
   const aplicMinStandard = obj.minAplicationValue.toLocaleString('pt-BR', { style: 'decimal' });
   // const rentabStandard = Number(rentabValueLoc.replace(expDot, '').replace(expComma, '.'));
-  const rentabStandard = obj.percentIndexValue;
+
 
   const ipcaCond = ob => ob.indexCaptureName.toLowerCase().includes('ipca');
   const cdiCond = ob => ob.indexCaptureName.toLowerCase().includes('cdi');
   const selicCond = ob => ob.indexCaptureName.toLowerCase().includes('selic');
-  const prefixedCond = ob => ob.taxaCaptacaoName.toLowerCase().includes('pre_fixada');
+  const prefixedCond = ob => ob.indexCaptureName.toLowerCase().includes('pre');
   const postfixedYield = o => ipcaCond(o) || cdiCond(o) || selicCond(o) || !prefixedCond(o);
-  const liquidezVenc = o => o.typeLiquidityName.toLowerCase().includes('no vencimento');
+  // const liquidezVenc = o => o.typeLiquidityName.toLowerCase().includes('no vencimento');
 
+  const rentabStandard = () => {
+    if (
+      prefixedCond(obj) ||
+      (
+        !prefixedCond(obj) &&
+        obj.indexName.includes('+')
+      )
+    ) {
+      return obj.taxValue;
+    } else {
+      return obj.percentIndexValue;
+    }
+  };
+  
   const yieldPercent = parseFloat(
-    (rentabStandard/100)
+    (rentabStandard()/100)
     .toFixed(4)
   )
     .toLocaleString(
@@ -71,16 +85,13 @@ const mapper = obj => {
     emissor: obj.issuerName,
     tipoPapel: obj.productName,
     tipoRentab: postfixedYield(obj) ? 'Pos' : 'Pre',
-    liquidez: liquidezVenc(obj) ? 'vcto' : '?',
     invMin: aplicMinStandard,
     vencimento: parserPrazo(obj.applicationDate, obj.applicationDeadline),
-    payJuros: obj.typeInterests.toLowerCase().includes('vencimento') ? 'vcto' : 'outro',
-    amort: obj.typeAmortization.toLowerCase().includes('vencimento') ? 'vcto' : 'outro',
-    ir: obj.incomeTaxFree ? 1 : 0,
+    ir: obj.incomeTaxFree ? 0 : 1,
     preRentAA: postfixedYield(obj) ? '-' : yieldPercent,
     posRentIndex: ipcaCond(obj) ? 'IPCA' : cdiCond(obj) ? 'DI' : selicCond(obj) ? 'SELIC' : '-',
-    posPercentIndex: obj.indexCaptureName.toLowerCase().includes('e') ? yieldPercent : '-',
-    posIndexPlus: obj.indexCaptureName.includes('+') ? yieldPercent : '-',
+    posPercentIndex: (postfixedYield(obj) && obj.indexName.includes('+')) ? '-' : yieldPercent,
+    posIndexPlus: (postfixedYield(obj) && obj.indexName.includes('+')) ? yieldPercent : '-',
   };
 };
 const outputArr = inputArrOrdered.map(mapper);

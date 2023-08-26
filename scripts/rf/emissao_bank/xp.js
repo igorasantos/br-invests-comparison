@@ -48,7 +48,7 @@ const mapper = obj => {
   const selicCond = ob => ob.fee.toLowerCase().includes('selic');
   const prefixedCond = ob => ob.indexers.toLowerCase().includes('pré-fixado');
   const postfixedYield = o => ipcaCond(o) || cdiCond(o) || selicCond(o) || !prefixedCond(o);
-  const liquidezVenc = o => o.redemptionType.toLowerCase().includes('no vencimento');
+  // const liquidezVenc = o => o.redemptionType.toLowerCase().includes('no vencimento');
   const incomeTax = product => {
     let ir;
     switch (product) {
@@ -91,11 +91,8 @@ const mapper = obj => {
     emissor: obj.nickName,
     tipoPapel: obj.product,
     tipoRentab: postfixedYield(obj) ? 'Pos' : 'Pre',
-    liquidez: liquidezVenc(obj) ? 'vcto' : 'amortizado',
     invMin: aplicMinStandard,
     vencimento: parserPrazo(obj.maturityDate),
-    payJuros: obj.descriptionInterestrates,
-    amort: obj.descriptionAmortization,
     ir: incomeTax(obj.product),
     preRentAA: postfixedYield(obj) ? '-' : yieldPercent,
     posRentIndex: ipcaCond(obj) ? 'IPCA' : cdiCond(obj) ? 'DI' : selicCond(obj) ? 'SELIC' : '-',
